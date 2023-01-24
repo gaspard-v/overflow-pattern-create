@@ -10,9 +10,12 @@ def get_bytes_in_int(n: int):
     return i
 
 
-def bytes_split_int(number: int, n: int):
+def bytes_split_int(number: int, n: int, reverse: bool = False):
     bytes_return = []
-    for i in range(n):
+    r = range(n)
+    if reverse:
+        r = range(n-1, -1, -1)
+    for i in r:
         b = (number >> (8*i)) & 0xFF
         bytes_return.append(b)
     return bytes_return
