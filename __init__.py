@@ -4,7 +4,7 @@ import x86.x64 as x64
 
 
 def main():
-    x64.generate()
+    print(x64.generate(length=100))
 
 
 if __name__ == "__main__":
