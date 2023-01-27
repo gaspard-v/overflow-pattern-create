@@ -7,8 +7,7 @@ import sys
 
 def main():
     data = x64.generate(length=100)
-    with open("oof.txt", "wb") as data_file:
-        utils.write_to_file(data_file, data)
+    utils.write_to_file(sys.stdout.buffer, data)
 
 
 if __name__ == "__main__":
