@@ -1,3 +1,6 @@
+from typing import IO, Any, Tuple, Set
+
+
 def get_bytes_in_int(n: int):
     if not n:
         return 1
@@ -10,7 +13,7 @@ def get_bytes_in_int(n: int):
     return i
 
 
-def bytes_split_int(number: int, n: int, allow_null_char: bool = False, reverse: bool = False) -> tuple:
+def bytes_split_int(number: int, n: int, allow_null_char: bool = False, reverse: bool = False) -> Tuple[int]:
     bytes_return = ()
     r = range(n)
     if reverse:
@@ -21,3 +24,8 @@ def bytes_split_int(number: int, n: int, allow_null_char: bool = False, reverse:
             b += 1
         bytes_return += (b,)
     return bytes_return
+
+
+def write_to_file(file_stream: IO[Any], data: Set[Tuple[int]]):
+    for element in data:
+        file_stream.write(bytes(element))
