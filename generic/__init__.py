@@ -8,6 +8,9 @@ def generate(length: int, pattern_length: int, address_ranges: list, allow_null_
     while len(pattern_return) < length:
         (low, high) = random.choice(address_ranges)
         random_number = random.randrange(low, high)
+        # TODO verifier si ce que retourne
+        # bytes_split_int est unique dans pattern_return
+        # unique aussi dans le sens inverse !
         pattern_return.add(
             bytes_split_int(number=random_number,
                             n=pattern_length, reverse=reverse, allow_null_char=allow_null_char)
