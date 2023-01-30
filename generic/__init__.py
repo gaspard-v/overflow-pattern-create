@@ -11,6 +11,7 @@ def generate(length: int, pattern_length: int, address_ranges: list, allow_null_
         # TODO verifier si ce que retourne
         # bytes_split_int est unique dans pattern_return
         # unique aussi dans le sens inverse !
+        # use set.issuperset({tuple[::-1]})
         pattern_return.add(
             bytes_split_int(number=random_number,
                             n=pattern_length, reverse=reverse, allow_null_char=allow_null_char)
