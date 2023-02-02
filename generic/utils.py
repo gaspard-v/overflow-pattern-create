@@ -1,4 +1,4 @@
-from typing import IO, Any, Tuple, Set
+from typing import IO, Any, Tuple, Set, List
 
 
 def get_bytes_in_int(n: int):
@@ -13,19 +13,19 @@ def get_bytes_in_int(n: int):
     return i
 
 
-def bytes_split_int(number: int, n: int, banned_bytes: list[int] = [0x0], reverse: bool = False) -> Tuple[int]:
+def bytes_split_int(number: int, n: int, banned_bytes: List[int] = [], reverse: bool = False) -> Tuple:
     bytes_return = ()
     r = range(n)
     if reverse:
         r = range(n-1, -1, -1)
     for i in r:
         b = (number >> (8*i)) & 0xFF
-        while not b or b in banned_bytes:
-            b += 1
+        while b in banned_bytes:
+            return ()
         bytes_return += (b,)
     return bytes_return
 
 
-def write_to_file(file_stream: IO[Any], data: Set[Tuple[int]]):
+def write_to_file(file_stream: IO[Any], data: Set[Tuple]):
     for element in data:
         file_stream.write(bytes(element))
