@@ -5,7 +5,7 @@ import generic.utils as utils
 import sys
 import argparse
 
-possible_
+availible_architecture = ["x86_64", "x86_32"]
 
 
 def parse_arguments():
@@ -13,12 +13,28 @@ def parse_arguments():
                                      description="Create pattern for many architecture such as x86",
                                      epilog="overflow-pattern-create")
     parser.add_argument("--arch",
-                        help="")
+                        help=f"specify which architure you want to find the offset, choices are {availible_architecture}",
+                        choices=availible_architecture,
+                        type=str,
+                        required=True)
+    parser.add_argument("--length",
+                        help="specify the length of the pattern, in bytes",
+                        type=int,
+                        required=True)
+    parser.add_argument("--file",
+                        help="specify which file the pattern would be written in",
+                        type=argparse.FileType(mode='wb'),
+                        required=False,
+                        default="pattern.txt")
+    parser.add_argument('--version', action='version', version='%(prog)s 1.0')
+    args = parser.parse_args()
+    return args
 
 
 def main():
-    data = x64.generate(length=100)
-    utils.write_to_file(sys.stdout.buffer, data)
+    script_args = parse_arguments()
+    data = x64.generate(length=script_args.length)
+    utils.write_to_file(script_args.file, data)
 
 
 if __name__ == "__main__":
