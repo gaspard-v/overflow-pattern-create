@@ -12,7 +12,7 @@ def generate(*args, **kwargs):
         **kwargs,
         pattern_length=X86_64_BYTES_LEN,
         address_ranges=[X86_64_LOW_RANGE, X86_64_HIGH_RANGE],
-        reverse=False,
+        reverse=True,
     )
 
 def get_offset(pattern: List[int], value: int):
