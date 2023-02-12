@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 import x86.x64 as x64
 import generic.utils as utils
-import sys
 import argparse
 
 availible_architecture = ["x86_64", "x86_32"]
@@ -38,11 +37,14 @@ def parse_arguments():
     args = parser.parse_args()
     return args
 
+def create_pattern(script_args):
+    if script_args.arch == "x86_64":
+        data = x64.generate(length=script_args.length)
+        utils.write_to_file(script_args.file, data)
 
 def main():
     script_args = parse_arguments()
-    data = x64.generate(length=script_args.length)
-    utils.write_to_file(script_args.file, data)
+    
 
 
 if __name__ == "__main__":

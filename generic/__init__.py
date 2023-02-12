@@ -1,5 +1,5 @@
-from typing import Set, Tuple, List
-from .utils import bytes_split_int
+from typing import Set, Tuple, List, Optional
+from .utils import bytes_split_int, get_offset as go
 import random
 
 
@@ -38,5 +38,5 @@ def generate(
     return pattern_return
 
 
-def get_offset(pattern_file: str, value: int):
-    pass
+def get_offset(pattern: list[int], value: list[int]) -> Optional[Tuple[bool, int]]:
+    return go(pattern=pattern, value=value)
