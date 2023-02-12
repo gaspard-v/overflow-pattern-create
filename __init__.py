@@ -30,7 +30,7 @@ def parse_arguments():
     parser.add_argument(
         "--file",
         help="specify which file the pattern would be read or written in",
-        type=argparse.FileType(mode="wb+"),
+        type=argparse.FileType(mode="w+b"),
         required=False,
         default="pattern.txt",
     )
