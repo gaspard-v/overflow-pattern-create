@@ -38,5 +38,5 @@ def generate(
     return pattern_return
 
 
-def get_offset(pattern: list[int], value: list[int]) -> Optional[Tuple[bool, int]]:
-    return go(pattern=pattern, value=value)
+def get_offset(*args, **kwargs) -> Optional[Tuple[bool, int]]:
+    return go(args, kwargs)

@@ -40,7 +40,7 @@ def write_to_file(file_stream: IO[Any], data: Set[Tuple]):
         file_stream.write(bytes(element))
 
 
-def get_offset(pattern: list[int], value: list[int]) -> Optional[Tuple[bool, int]]:
+def get_offset(pattern: list[int], value) -> Optional[Tuple[bool, int]]:
     return_value = find_offset(pattern, value)
     if return_value:
         return (False, return_value)

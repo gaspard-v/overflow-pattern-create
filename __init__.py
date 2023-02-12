@@ -22,24 +22,31 @@ def parse_arguments():
         required=True,
     )
     parser.add_argument(
-        "--length",
-        help="specify the length of the pattern, in bytes",
-        type=int,
-        required=True,
-    )
-    parser.add_argument(
-        "--file",
-        help="specify which file the pattern would be read or written in",
-        type=argparse.FileType(mode="w+b"),
-        required=False,
-        default="pattern.txt",
-    )
-    parser.add_argument(
         "--action",
         help=f"Specifie what the script should do, choices are {availible_action}",
         choices=availible_action,
         type=str,
         required=True
+    )
+    parser.add_argument(
+        "--length",
+        help="specify the length of the pattern, in bytes",
+        type=int,
+        default=-1,
+        required=False
+    )
+    parser.add_argument(
+        "--file",
+        help="specify which file the pattern would be read or written in",
+        type=argparse.FileType(mode="w+b"),
+        required=False
+    )
+    parser.add_argument(
+        "--value",
+        help="specify the value of your EIP/RIP register for exemple (in hexadecimal like 0x12345678)",
+        type=int,
+        default=-1,
+        required=False
     )
     parser.add_argument("--version", action="version", version="%(prog)s 1.0")
     args = parser.parse_args()
@@ -50,12 +57,20 @@ def create_pattern(script_args):
         data = x64.generate(length=script_args.length)
         utils.write_to_file(script_args.file, data)
 
+def get_offset(script_args):
+    f = script_args.file
+    pattern_int = []
+    while byte := f.read(1):
+        byte_int = int.from_bytes(byte, "big")
+        pattern_int.append(byte_int)
+    x64.get_offset(pattern_int, script_args.value)
+
 def main():
     script_args = parse_arguments()
     if script_args.action == "create_pattern":
         create_pattern(script_args)
     elif script_args.action == "get_offset":
-        pass
+        get_offset(script_args)
     
     
 
