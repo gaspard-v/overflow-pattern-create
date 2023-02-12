@@ -5,6 +5,7 @@ import generic.utils as utils
 import argparse
 
 availible_architecture = ["x86_64", "x86_32"]
+availible_action = ["create_pattern", "get_offset"]
 
 
 def parse_arguments():
@@ -28,10 +29,17 @@ def parse_arguments():
     )
     parser.add_argument(
         "--file",
-        help="specify which file the pattern would be written in",
-        type=argparse.FileType(mode="wb"),
+        help="specify which file the pattern would be read or written in",
+        type=argparse.FileType(mode="wb+"),
         required=False,
         default="pattern.txt",
+    )
+    parser.add_argument(
+        "--action",
+        help=f"Specifie what the script should do, choices are {availible_action}",
+        choices=availible_action,
+        type=str,
+        required=True
     )
     parser.add_argument("--version", action="version", version="%(prog)s 1.0")
     args = parser.parse_args()
@@ -44,6 +52,11 @@ def create_pattern(script_args):
 
 def main():
     script_args = parse_arguments()
+    if script_args.action == "create_pattern":
+        create_pattern(script_args)
+    elif script_args.action == "get_offset":
+        pass
+    
     
 
 
