@@ -77,7 +77,7 @@ def get_offset(script_args):
         return 1
     (reversed, offset) = result
 
-    print(f"offset: {offset}")
+    print(f"offset: {offset} byte(s)")
     if reversed:
         print(f"Warning, the pattern is reversed")
 
