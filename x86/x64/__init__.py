@@ -10,5 +10,5 @@ def generate(*args, **kwargs):
         **kwargs,
         pattern_length=8,
         address_ranges=[X86_64_LOW_RANGE, X86_64_HIGH_RANGE],
-        reverse=True,
+        reverse=False,
     )

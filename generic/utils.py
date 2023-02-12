@@ -1,4 +1,4 @@
-from typing import IO, Any, Tuple, Set, List
+from typing import IO, Any, Tuple, Set, List, Optional
 
 
 def find_offset(mylist, pattern):
@@ -40,5 +40,10 @@ def write_to_file(file_stream: IO[Any], data: Set[Tuple]):
         file_stream.write(bytes(element))
 
 
-def get_offset(pattern: list[int], value: list[int]):
-    find_offset(pattern, value)
+def get_offset(pattern: list[int], value: list[int]) -> Optional[Tuple[bool, int]]:
+    return_value = find_offset(pattern, value)
+    if return_value:
+        return (False, return_value)
+    return_value = find_offset(pattern, value[::-1])
+    if return_value:
+        return (True, return_value)
