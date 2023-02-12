@@ -9,24 +9,32 @@ availible_architecture = ["x86_64", "x86_32"]
 
 
 def parse_arguments():
-    parser = argparse.ArgumentParser(prog="overflow-pattern-create",
-                                     description="Create pattern for many architecture such as x86",
-                                     epilog="overflow-pattern-create")
-    parser.add_argument("--arch",
-                        help=f"specify which architure you want to find the offset, choices are {availible_architecture}",
-                        choices=availible_architecture,
-                        type=str,
-                        required=True)
-    parser.add_argument("--length",
-                        help="specify the length of the pattern, in bytes",
-                        type=int,
-                        required=True)
-    parser.add_argument("--file",
-                        help="specify which file the pattern would be written in",
-                        type=argparse.FileType(mode='wb'),
-                        required=False,
-                        default="pattern.txt")
-    parser.add_argument('--version', action='version', version='%(prog)s 1.0')
+    parser = argparse.ArgumentParser(
+        prog="overflow-pattern-create",
+        description="Create pattern for many architecture such as x86",
+        epilog="overflow-pattern-create",
+    )
+    parser.add_argument(
+        "--arch",
+        help=f"specify which architure you want to find the offset, choices are {availible_architecture}",
+        choices=availible_architecture,
+        type=str,
+        required=True,
+    )
+    parser.add_argument(
+        "--length",
+        help="specify the length of the pattern, in bytes",
+        type=int,
+        required=True,
+    )
+    parser.add_argument(
+        "--file",
+        help="specify which file the pattern would be written in",
+        type=argparse.FileType(mode="wb"),
+        required=False,
+        default="pattern.txt",
+    )
+    parser.add_argument("--version", action="version", version="%(prog)s 1.0")
     args = parser.parse_args()
     return args
 
