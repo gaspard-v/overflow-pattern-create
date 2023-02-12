@@ -3,6 +3,8 @@
 import x86.x64 as x64
 import generic.utils as utils
 import argparse
+import sys
+from ast import literal_eval
 
 availible_architecture = ["x86_64", "x86_32"]
 availible_action = ["create_pattern", "get_offset"]
@@ -44,12 +46,16 @@ def parse_arguments():
     parser.add_argument(
         "--value",
         help="specify the value of your EIP/RIP register for exemple (in hexadecimal like 0x12345678)",
-        type=int,
-        default=-1,
+        type=str,
+        default="-1",
         required=False
     )
     parser.add_argument("--version", action="version", version="%(prog)s 1.0")
     args = parser.parse_args()
+    try:
+        args.value = literal_eval(args.value)
+    except ValueError as value_error:
+        print(f"cannnot parse value \"{args.value}\"", file=sys.stderr)
     return args
 
 def create_pattern(script_args):
@@ -57,6 +63,7 @@ def create_pattern(script_args):
         data = x64.generate(length=script_args.length)
         with open(script_args.file, "wb") as f:
             utils.write_to_file(f, data)
+    return 0
 
 def get_offset(script_args):
     pattern_int = []
@@ -65,14 +72,23 @@ def get_offset(script_args):
             byte_int = int.from_bytes(byte, "big")
             pattern_int.append(byte_int)
     result = x64.get_offset(pattern_int, script_args.value)
-    print(result)
+    if not result:
+        print("pattern not found")
+        return 1
+    (reversed, offset) = result
+
+    print(f"offset: {offset}")
+    if reversed:
+        print(f"Warning, the pattern is reversed")
 
 def main():
     script_args = parse_arguments()
+    return_code = 1
     if script_args.action == "create_pattern":
-        create_pattern(script_args)
+        return_code = create_pattern(script_args)
     elif script_args.action == "get_offset":
-        get_offset(script_args)
+        return_code = get_offset(script_args)
+    exit(return_code)
     
     
 
