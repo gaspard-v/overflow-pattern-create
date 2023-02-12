@@ -1,11 +1,16 @@
 from typing import IO, Any, Tuple, Set, List, Optional
 
 
-def find_offset(mylist, pattern):
-    pattern = set(pattern)
-    for idx, x in enumerate(mylist):
-        if x in pattern:
-            return idx
+def find_offset(my_list, pattern):
+    pattern = list(pattern)
+    idx_pattern = 0
+    for idx, element in enumerate(my_list):
+        if element != pattern[idx_pattern]:
+            idx_pattern = 0
+            continue
+        idx_pattern += 1
+        if idx_pattern == len(pattern):
+            return idx+1
 
 
 def get_bytes_in_int(n: int):

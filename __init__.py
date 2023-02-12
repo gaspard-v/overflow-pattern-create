@@ -38,7 +38,7 @@ def parse_arguments():
     parser.add_argument(
         "--file",
         help="specify which file the pattern would be read or written in",
-        type=argparse.FileType(mode="w+b"),
+        type=str,
         required=False
     )
     parser.add_argument(
@@ -55,15 +55,17 @@ def parse_arguments():
 def create_pattern(script_args):
     if script_args.arch == "x86_64":
         data = x64.generate(length=script_args.length)
-        utils.write_to_file(script_args.file, data)
+        with open(script_args.file, "wb") as f:
+            utils.write_to_file(f, data)
 
 def get_offset(script_args):
-    f = script_args.file
     pattern_int = []
-    while byte := f.read(1):
-        byte_int = int.from_bytes(byte, "big")
-        pattern_int.append(byte_int)
-    x64.get_offset(pattern_int, script_args.value)
+    with open(script_args.file, "rb") as f:
+        while byte := f.read(1):
+            byte_int = int.from_bytes(byte, "big")
+            pattern_int.append(byte_int)
+    result = x64.get_offset(pattern_int, script_args.value)
+    print(result)
 
 def main():
     script_args = parse_arguments()

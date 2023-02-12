@@ -3,7 +3,7 @@ from typing import List
 
 X86_64_LOW_RANGE = (0x00_00_00_00_00_00_00_00, 0x00_00_7F_FF_FF_FF_FF_FF)
 X86_64_HIGH_RANGE = (0xFF_FF_80_00_00_00_00_00, 0xFF_FF_FF_FF_FF_FF_FF_FF)
-X86_64_BYTES_LEN = 64//8
+X86_64_BYTES_LEN = 8
 
 
 def generate(*args, **kwargs):
