@@ -10,7 +10,7 @@ def find_offset(my_list, pattern):
             continue
         idx_pattern += 1
         if idx_pattern == len(pattern):
-            return idx+1
+            return idx
 
 
 def get_bytes_in_int(n: int):

@@ -40,4 +40,4 @@ def generate(
 
 def get_offset(*args, **kwargs) -> Optional[Tuple[bool, int]]:
     result = go(*args, **kwargs)
-    return (result[0], result[1] // 8)
+    return (result[0], result[1])
