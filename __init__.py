@@ -78,7 +78,8 @@ def parse_arguments():
 
 def create_pattern(script_args):
     if script_args.arch == "x86_64":
-        data = x64.generate(length=script_args.length)
+        data = x64.generate(length=script_args.length,
+                            banned_bytes=script_args.exclude)
         with open(script_args.file, "wb") as f:
             utils.write_to_file(f, data)
     return 0
