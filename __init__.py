@@ -34,7 +34,7 @@ def parse_arguments():
         "--length",
         help="specify the length of the pattern, in bytes",
         type=int,
-        default=-1,
+        default=100,
         required=False
     )
     parser.add_argument(
@@ -50,13 +50,31 @@ def parse_arguments():
         default="-1",
         required=False
     )
+    parser.add_argument(
+        "--exclude",
+        help="exclude bytes from the generation pattern algorithm",
+        nargs="+",
+        default=[],
+        required=False
+    )
     parser.add_argument("--version", action="version", version="%(prog)s 1.0")
     args = parser.parse_args()
     try:
         args.value = literal_eval(args.value)
     except ValueError as value_error:
         print(f"cannnot parse value \"{args.value}\"", file=sys.stderr)
+        exit(2)
+    try:
+        args.exclude = list(map(lambda x: int(x), args.exclude))
+    except:
+        try:
+            args.exclude = list(map(lambda x: literal_eval(x), args.exclude))
+        except Exception as err:
+            print(
+                f"Cannot parse excluded bytes ! Error {err}", file=sys.stderr)
+            exit(2)
     return args
+
 
 def create_pattern(script_args):
     if script_args.arch == "x86_64":
@@ -64,6 +82,7 @@ def create_pattern(script_args):
         with open(script_args.file, "wb") as f:
             utils.write_to_file(f, data)
     return 0
+
 
 def get_offset(script_args):
     pattern_int = []
@@ -81,6 +100,7 @@ def get_offset(script_args):
     if reversed:
         print(f"Warning, the pattern is reversed")
 
+
 def main():
     script_args = parse_arguments()
     return_code = 1
@@ -89,8 +109,6 @@ def main():
     elif script_args.action == "get_offset":
         return_code = get_offset(script_args)
     exit(return_code)
-    
-    
 
 
 if __name__ == "__main__":

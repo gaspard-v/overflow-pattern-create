@@ -7,7 +7,7 @@ def generate(
     length: int,
     pattern_length: int,
     address_ranges: List[Tuple[int, int]],
-    banned_bytes: List[int] = [0x0],
+    banned_bytes: List[int] = [],
     reverse: bool = False,
 ) -> Set[Tuple]:
     pattern_return = set()
@@ -40,4 +40,3 @@ def generate(
 
 def get_offset(*args, **kwargs) -> Optional[Tuple[bool, int]]:
     return go(*args, **kwargs)
-    
