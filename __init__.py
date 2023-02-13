@@ -10,6 +10,13 @@ availible_architecture = ["x86_64", "x86_32"]
 availible_action = ["create_pattern", "get_offset"]
 
 
+def parse_excluded_bytes(x):
+    try:
+        return int(x)
+    except:
+        return literal_eval(x)
+
+
 def parse_arguments():
     parser = argparse.ArgumentParser(
         prog="overflow-pattern-create",
@@ -65,14 +72,11 @@ def parse_arguments():
         print(f"cannnot parse value \"{args.value}\"", file=sys.stderr)
         exit(2)
     try:
-        args.exclude = list(map(lambda x: int(x), args.exclude))
-    except:
-        try:
-            args.exclude = list(map(lambda x: literal_eval(x), args.exclude))
-        except Exception as err:
-            print(
-                f"Cannot parse excluded bytes ! Error {err}", file=sys.stderr)
-            exit(2)
+        args.exclude = list(map(parse_excluded_bytes, args.exclude))
+    except Exception as err:
+        print(
+            f"Cannot parse excluded bytes ! Error {err}", file=sys.stderr)
+        exit(2)
     return args
 
 
