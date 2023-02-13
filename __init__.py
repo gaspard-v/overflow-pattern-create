@@ -57,7 +57,7 @@ def parse_arguments():
         default=[],
         required=False
     )
-    parser.add_argument("--version", action="version", version="%(prog)s 1.0")
+    parser.add_argument("--version", action="version", version="%(prog)s 1.1")
     args = parser.parse_args()
     try:
         args.value = literal_eval(args.value)
